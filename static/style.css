@@ -1,0 +1,401 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #07111e;
+    color: white;
+}
+
+/* NAVIGATION */
+
+.navbar {
+    width: 100%;
+    padding: 22px 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    background: rgba(5, 12, 24, 0.88);
+    backdrop-filter: blur(15px);
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 29px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: white;
+    text-decoration: none;
+}
+
+.logo span,
+footer span {
+    color: #35a8ff;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #35a8ff;
+}
+
+
+/* HERO SECTION */
+
+.hero {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 120px 10% 70px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(3, 9, 19, 0.94),
+            rgba(3, 9, 19, 0.55),
+            rgba(3, 9, 19, 0.40)
+        ),
+        url("/static/car-background.gif");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.tag {
+    display: inline-block;
+    color: #47b1ff;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 76px);
+    line-height: 1.08;
+    margin-bottom: 25px;
+}
+
+.hero h1 span {
+    color: #35a8ff;
+}
+
+.hero p {
+    color: #d2dbe7;
+    font-size: 17px;
+    line-height: 1.8;
+    max-width: 550px;
+    margin-bottom: 32px;
+}
+
+.hero-button {
+    display: inline-block;
+    background: #1688e8;
+    color: white;
+    text-decoration: none;
+    padding: 16px 27px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.hero-button:hover {
+    background: #0866b9;
+    transform: translateY(-3px);
+}
+
+
+/* PREDICTION SECTION */
+
+.prediction-section {
+    padding: 90px 6%;
+    background: #0a1423;
+}
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 45px;
+
+    color: #1d2b40;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 18px;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.section-heading h2 {
+    color: #142b49;
+    font-size: 34px;
+    margin-bottom: 12px;
+}
+
+.section-heading p {
+    color: #64748b;
+    line-height: 1.6;
+}
+
+form h3 {
+    color: #1677cf;
+    margin: 35px 0 22px;
+    font-size: 19px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 23px;
+}
+
+.field label {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 9px;
+    color: #34445d;
+}
+
+.field input,
+.field select {
+    width: 100%;
+    height: 48px;
+    padding: 12px;
+
+    background: #f7f9fc;
+    border: 1px solid #d6dfeb;
+    border-radius: 7px;
+
+    font-size: 15px;
+    color: #26364d;
+    outline: none;
+}
+
+.field input:focus,
+.field select:focus {
+    border-color: #1688e8;
+    box-shadow: 0 0 0 3px rgba(22,136,232,0.12);
+}
+
+.predict-button {
+    width: 100%;
+    padding: 17px;
+    margin-top: 40px;
+
+    background: #147cda;
+    color: white;
+
+    border: none;
+    border-radius: 7px;
+
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.predict-button:hover {
+    background: #075cae;
+    transform: translateY(-2px);
+}
+
+
+/* RESULT */
+
+.result {
+    margin-top: 35px;
+    padding: 35px;
+    text-align: center;
+
+    background: linear-gradient(135deg, #e6f5ff, #e7f9ef);
+    border: 1px solid #b5dfca;
+    border-radius: 12px;
+}
+
+.result h2 {
+    color: #173a61;
+    margin-bottom: 12px;
+}
+
+.car-details {
+    color: #52657b;
+    margin-bottom: 12px;
+}
+
+.price {
+    font-size: clamp(30px, 6vw, 46px);
+    color: #078448;
+    font-weight: 900;
+    margin: 18px 0;
+}
+
+.result p {
+    color: #40536a;
+}
+
+.result small {
+    display: block;
+    margin-top: 15px;
+    color: #617187;
+}
+
+
+/* ERROR */
+
+.error {
+    padding: 18px;
+    margin-top: 25px;
+    border-radius: 8px;
+    color: #a11d1d;
+    background: #ffe5e5;
+    text-align: center;
+}
+
+
+/* ABOUT SECTION */
+
+.about {
+    padding: 90px 8%;
+    text-align: center;
+    background: #101d30;
+}
+
+.about h2 {
+    font-size: 35px;
+    margin-bottom: 20px;
+}
+
+.about > p {
+    max-width: 750px;
+    margin: auto;
+    color: #c2ccda;
+    line-height: 1.8;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-top: 45px;
+}
+
+.feature-card {
+    padding: 30px 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px;
+}
+
+.feature-card h3 {
+    color: #48adff;
+    margin-bottom: 14px;
+}
+
+.feature-card p {
+    color: #c4cfdd;
+    line-height: 1.6;
+}
+
+
+/* FOOTER */
+
+footer {
+    padding: 35px 15px;
+    text-align: center;
+    background: #050c16;
+}
+
+footer h2 {
+    font-size: 27px;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    color: #c6d1df;
+    margin-bottom: 10px;
+}
+
+footer small {
+    color: #7f8fa3;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 700px) {
+
+    .navbar {
+        padding: 18px 5%;
+        flex-direction: column;
+        gap: 17px;
+    }
+
+    nav {
+        gap: 17px;
+    }
+
+    nav a {
+        font-size: 12px;
+    }
+
+    .hero {
+        min-height: 90vh;
+        padding: 150px 7% 60px;
+        background-position: center;
+    }
+
+    .prediction-section {
+        padding: 45px 4%;
+    }
+
+    .container {
+        padding: 25px 18px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .section-heading h2 {
+        font-size: 27px;
+    }
+}

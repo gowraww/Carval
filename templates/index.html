@@ -1,0 +1,529 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CARVAL | Used Car Price Prediction</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #080d18;
+            color: white;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            color: white;
+        }
+
+        .logo span {
+            color: #00aaff;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 14px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            padding: 140px 8% 80px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(rgba(3, 8, 18, .75),
+                                rgba(3, 8, 18, .88)),
+                url("/static/car-background.gif");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        .hero-heading {
+            max-width: 650px;
+            margin-bottom: 35px;
+        }
+
+        .tagline {
+            color: #00aaff;
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        h1 span {
+            color: #00aaff;
+        }
+
+        .hero-heading p {
+            color: #d0d7e5;
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, .96);
+            color: #101827;
+            padding: 35px;
+            border-radius: 18px;
+            max-width: 1050px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, .35);
+        }
+
+        .form-card h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .form-description {
+            color: #657084;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #29364a;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d7deea;
+            border-radius: 8px;
+            background: #f8fafc;
+            color: #172033;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #008cff;
+            box-shadow: 0 0 0 3px rgba(0, 140, 255, .12);
+        }
+
+        .form-group select:disabled {
+            background: #e9edf3;
+            cursor: not-allowed;
+        }
+
+        .predict-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+            border: none;
+            border-radius: 9px;
+            background: linear-gradient(90deg, #007bff, #00b4ff);
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .predict-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 140, 255, .3);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 22px;
+            border-radius: 12px;
+            background: #eaf5ff;
+            border: 1px solid #b8ddff;
+            color: #12243a;
+        }
+
+        .result h3 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 32px;
+            font-weight: 800;
+            margin-top: 8px;
+        }
+
+        .about {
+            padding: 80px 8%;
+            text-align: center;
+            background: #0c1424;
+        }
+
+        .about h2 {
+            font-size: 32px;
+            margin-bottom: 18px;
+        }
+
+        .about h2 span {
+            color: #00aaff;
+        }
+
+        .about p {
+            color: #b9c5d8;
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #050912;
+            color: #8d9bb0;
+            font-size: 13px;
+        }
+
+        @media(max-width: 800px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .navbar {
+                padding: 20px 5%;
+            }
+        }
+
+        @media(max-width: 550px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .form-card {
+                padding: 22px;
+            }
+
+            .hero {
+                padding: 110px 5% 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">CAR<span>VAL</span></div>
+
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#predict">Predict Price</a>
+        <a href="#about">About</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+
+        <div class="hero-heading">
+            <div class="tagline">SMART AUTOMOTIVE PRICE INTELLIGENCE</div>
+
+            <h1>Find Your Car's <span>True Value.</span></h1>
+
+            <p>
+                Discover the estimated market value of your used car
+                using Machine Learning. Select your vehicle details
+                and get an instant price prediction.
+            </p>
+        </div>
+
+        <div class="form-card" id="predict">
+
+            <h2>Predict Your Car Price</h2>
+
+            <p class="form-description">
+                Enter your vehicle information below.
+            </p>
+
+            <form method="POST" action="/">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label>Car Brand</label>
+
+                        <select name="brand" id="brand" required>
+                            <option value="">Select Brand</option>
+                            <option value="Maruti">Maruti</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Honda">Honda</option>
+                            <option value="Tata">Tata</option>
+                            <option value="Mahindra">Mahindra</option>
+                            <option value="Toyota">Toyota</option>
+                            <option value="Kia">Kia</option>
+                            <option value="Renault">Renault</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Car Model</label>
+
+                        <select name="model" id="model" required disabled>
+                            <option value="">Select Brand First</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Manufacturing Year</label>
+                        <input type="number" name="year"
+                               min="1990" max="2026"
+                               placeholder="Example: 2020" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kilometers Driven</label>
+                        <input type="number" name="km_driven"
+                               min="0" placeholder="Example: 45000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fuel Type</label>
+                        <select name="fuel" required>
+                            <option value="">Select Fuel</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="CNG">CNG</option>
+                            <option value="LPG">LPG</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Seller Type</label>
+                        <select name="seller_type" required>
+                            <option value="">Select Seller</option>
+                            <option value="Individual">Individual</option>
+                            <option value="Dealer">Dealer</option>
+                            <option value="Trustmark Dealer">Trustmark Dealer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Transmission</label>
+                        <select name="transmission" required>
+                            <option value="">Select Transmission</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Previous Owner</label>
+                        <select name="owner" required>
+                            <option value="">Select Owner</option>
+                            <option value="First Owner">First Owner</option>
+                            <option value="Second Owner">Second Owner</option>
+                            <option value="Third Owner">Third Owner</option>
+                            <option value="Fourth & Above Owner">Fourth & Above Owner</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mileage (km/l)</label>
+                        <input type="number" step="0.1" name="mileage"
+                               min="1" placeholder="Example: 20.5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Engine Capacity (CC)</label>
+                        <input type="number" name="engine"
+                               min="1" placeholder="Example: 1199" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Maximum Power (BHP)</label>
+                        <input type="number" step="0.1" name="power"
+                               min="1" placeholder="Example: 88.5" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Number of Seats</label>
+                        <select name="seats" required>
+                            <option value="">Select Seats</option>
+                            <option value="4">4 Seats</option>
+                            <option value="5">5 Seats</option>
+                            <option value="6">6 Seats</option>
+                            <option value="7">7 Seats</option>
+                            <option value="8">8 Seats</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="predict-btn">
+                    Predict Car Price →
+                </button>
+
+            </form>
+
+            {% if prediction %}
+            <div class="result">
+                <h3>Prediction Result</h3>
+
+                {% if car_details %}
+                    <p>{{ car_details }}</p>
+                {% endif %}
+
+                <div class="price">{{ prediction }}</div>
+                <p>Estimated price based on the trained ML model.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</section>
+
+<section class="about" id="about">
+    <h2>About <span>CARVAL</span></h2>
+
+    <p>
+        CARVAL is a Machine Learning-based used car price prediction
+        application. It uses vehicle information such as brand, model,
+        manufacturing year, mileage, engine capacity, fuel type and
+        kilometers driven to estimate a car's selling price.
+        The application uses a trained Linear Regression model
+        integrated with Python and Flask.
+    </p>
+</section>
+
+<footer>
+    © 2026 CARVAL | Machine Learning Used Car Price Prediction Project
+</footer>
+
+<script>
+    const carModels = {
+        "Maruti": [
+            "Alto", "Swift", "Baleno", "Dzire",
+            "Wagon R", "Brezza", "Ertiga", "Celerio"
+        ],
+
+        "Hyundai": [
+            "i10", "Grand i10", "i20", "Creta",
+            "Verna", "Venue", "Santro", "Exter"
+        ],
+
+        "Honda": [
+            "Amaze", "City", "Jazz", "Civic",
+            "WR-V", "Brio", "Mobilio"
+        ],
+
+        "Tata": [
+            "Nexon", "Punch", "Tiago", "Tigor",
+            "Altroz", "Harrier", "Safari"
+        ],
+
+        "Mahindra": [
+            "Scorpio", "XUV300", "XUV500",
+            "XUV700", "Thar", "Bolero"
+        ],
+
+        "Toyota": [
+            "Innova", "Fortuner", "Glanza",
+            "Etios", "Urban Cruiser", "Camry"
+        ],
+
+        "Kia": [
+            "Seltos", "Sonet", "Carens", "Carnival"
+        ],
+
+        "Renault": [
+            "Kwid", "Triber", "Duster", "Kiger"
+        ]
+    };
+
+    const brandSelect = document.getElementById("brand");
+    const modelSelect = document.getElementById("model");
+
+    brandSelect.addEventListener("change", function () {
+
+        const selectedBrand = this.value;
+
+        modelSelect.innerHTML = "";
+
+        if (selectedBrand && carModels[selectedBrand]) {
+
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select Model";
+
+            modelSelect.appendChild(defaultOption);
+
+            carModels[selectedBrand].forEach(function (carModel) {
+
+                const option = document.createElement("option");
+
+                option.value = carModel;
+                option.textContent = carModel;
+
+                modelSelect.appendChild(option);
+            });
+
+            modelSelect.disabled = false;
+
+        } else {
+
+            modelSelect.innerHTML =
+                '<option value="">Select Brand First</option>';
+
+            modelSelect.disabled = true;
+        }
+    });
+</script>
+
+</body>
+</html>
